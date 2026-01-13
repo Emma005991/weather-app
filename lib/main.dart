@@ -91,6 +91,12 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     _loadLastCity();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadLastCity() async {
     final prefs = await SharedPreferences.getInstance();
     final last = prefs.getString('lastCity');
@@ -112,6 +118,10 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
     });
 
     try {
+      if (apiKey == "YOUR_API_KEY_HERE") {
+        throw Exception("API key not set");
+      }
+
       final encodedCity = Uri.encodeComponent(cityName);
       final url = Uri.parse(
         'https://api.openweathermap.org/data/2.5/weather?q=$encodedCity&appid=$apiKey&units=metric',
@@ -138,7 +148,9 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
       _saveLastCity(cityName);
     } catch (e) {
       setState(() {
-        _error = "Could not fetch weather. Check the city name.";
+        _error = apiKey == "YOUR_API_KEY_HERE"
+            ? "Please set your OpenWeather API key in main.dart"
+            : "Could not fetch weather. Check the city name.";
       });
     } finally {
       setState(() {
@@ -160,11 +172,25 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: List.generate(
             3,
-            (_) =>
-                Container(height: 80, width: 90, color: Colors.grey.shade300),
+            (_) => Container(height: 80, width: 90, color: Colors.grey.shade300),
           ),
         ),
       ],
+    );
+  }
+
+  Widget _infoCard(String title, String value) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Column(
+          children: [
+            Text(title, style: const TextStyle(fontSize: 12)),
+            const SizedBox(height: 6),
+            Text(value, style: const TextStyle(fontSize: 18)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -212,26 +238,16 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
 
             if (!_loading && city != null && temperature != null) ...[
               const SizedBox(height: 24),
-              Text(
-                city!,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(city!,
+                  style: const TextStyle(
+                      fontSize: 28, fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
-              Text(
-                "${temperature!.toStringAsFixed(1)} °C",
-                style: const TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              Text("${temperature!.toStringAsFixed(1)} °C",
+                  style: const TextStyle(
+                      fontSize: 48, fontWeight: FontWeight.w300)),
               const SizedBox(height: 8),
-              Text(
-                description!.toUpperCase(),
-                style: const TextStyle(letterSpacing: 1.2),
-              ),
+              Text(description!.toUpperCase(),
+                  style: const TextStyle(letterSpacing: 1.2)),
               const SizedBox(height: 16),
               if (icon != null)
                 Image.network(
@@ -249,21 +265,6 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
                 ],
               ),
             ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _infoCard(String title, String value) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          children: [
-            Text(title, style: const TextStyle(fontSize: 12)),
-            const SizedBox(height: 6),
-            Text(value, style: const TextStyle(fontSize: 18)),
           ],
         ),
       ),
