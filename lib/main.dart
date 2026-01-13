@@ -83,7 +83,7 @@ class _WeatherHomePageState extends State<WeatherHomePage> {
   String? description;
   String? icon;
 
-  static const String apiKey = "84a21664c91a0b990fbbeb676925ce6e";
+  static const String apiKey = "YOUR_API_KEY_HERE";
 
   @override
   void initState() {
