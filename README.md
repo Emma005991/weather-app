@@ -1,14 +1,13 @@
 
-````markdown
-# 🌦️ Weather App (Flutter)
+Weather App (Flutter)
 
-A modern Flutter weather application that fetches real-time weather data using the OpenWeather API.  
+A modern Flutter weather application that fetches real time weather data using the OpenWeather API.  
 Built as part of my Flutter portfolio to demonstrate API integration, state handling, persistence, and clean UI design.
 
 ## ✨ Features
 
 - 🔍 Search weather by city name  
-- 🌡️ Real-time temperature & conditions  
+- 🌡️ Real time temperature & conditions  
 - 💧 Extra info: feels like, humidity, wind speed  
 - 💾 Remembers last searched city  
 - 🌓 Light & Dark mode (saved automatically)  
@@ -20,7 +19,7 @@ Built as part of my Flutter portfolio to demonstrate API integration, state hand
 - **Flutter**
 - **Dart**
 - **OpenWeather API**
-- `http` – API requests  
+- `http` : API requests  
 - `shared_preferences` – local persistence  
 - Material 3 UI
 
@@ -59,7 +58,7 @@ This project is part of my Flutter portfolio. It demonstrates:
 * Async programming
 * State management
 * UI/UX design
-* Cross-platform Flutter development
+* Cross platform Flutter development
 
 ---
 
