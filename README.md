@@ -1,5 +1,5 @@
 
-Weather App (Flutter)
+# Weather App (Flutter)
 
 A modern Flutter weather application that fetches real time weather data using the OpenWeather API.  
 Built as part of my Flutter portfolio to demonstrate API integration, state handling, persistence, and clean UI design.
